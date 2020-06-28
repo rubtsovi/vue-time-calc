@@ -1,11 +1,11 @@
 <template>
   <div class="py-5">
     <b-container>
-      <b-row>
-        <b-col cols="12" md="6">
+      <b-row class="my-n3">
+        <b-col cols="12" md="6" class="py-3">
           <InputComponent></InputComponent>
         </b-col>
-        <b-col cols="12" md="6">
+        <b-col cols="12" md="6" class="py-3">
           <ResultComponent></ResultComponent>
         </b-col>
       </b-row>

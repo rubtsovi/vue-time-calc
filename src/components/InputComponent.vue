@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-form-row class="mb-3">
-      <b-col :cols="12" :sm="6">
+    <b-form-row class="my-n2">
+      <b-col :cols="12" :sm="6" class="py-2">
         <label for="hours-control" class="sr-only">Hours</label>
         <b-form-input
           id="hours-control"
@@ -11,7 +11,7 @@
           min="0"
         />
       </b-col>
-      <b-col :cols="12" :sm="6">
+      <b-col :cols="12" :sm="6" class="py-2">
         <label for="minutes-control" class="sr-only">Minutes</label>
         <b-form-input
           id="minutes-control"
@@ -24,7 +24,7 @@
         />
       </b-col>
     </b-form-row>
-    <b-button variant="primary" @click="initAddMutation()">Add session</b-button>
+    <b-button class="mt-3" variant="primary" @click="initAddMutation()">Add session</b-button>
   </div>
 </template>
 
