@@ -1,29 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <b-jumbotron
+      header="Time calc App"
+      lead="The app which helps you to manage your working time"
+      :fluid="true"
+      bg-variant="primary"
+      text-variant="white"
+    ></b-jumbotron>
+    <WorkArea></WorkArea>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import WorkArea from "./components/WorkArea.vue";
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
+    WorkArea,
+  },
 });
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss"></style>
