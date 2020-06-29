@@ -11,7 +11,7 @@
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/transitions";
-// @import "dropdown";
+@import "~bootstrap/scss/dropdown";
 @import "~bootstrap/scss/button-group";
 @import "~bootstrap/scss/input-group";
 @import "~bootstrap/scss/custom-forms";
@@ -35,3 +35,9 @@
 @import "~bootstrap/scss/spinners";
 @import "~bootstrap/scss/utilities";
 // @import "print";
+
+// Boostrap vue
+// @import "~bootstrap-vue/src/components/form-spinbutton";
+// @import "~bootstrap-vue/src/components/time";
+@import "~bootstrap-vue/src";
+// @import "~bootstrap-vue/src/components/form-timepicker/timepicker";
