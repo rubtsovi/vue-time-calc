@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { WorkSession } from "@/types";
+import { WorkSession, Time } from "@/types";
 
 Vue.use(Vuex);
 
@@ -14,15 +14,19 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    totalTime(state): WorkSession {
-      return state.sessions.reduce((prev: WorkSession, curr: WorkSession) => {
-        let hours: number = prev.hours + curr.hours;
-        let minutes: number = prev.minutes + curr.minutes;
-        hours += Math.floor(minutes / 60);
-        minutes = minutes % 60;
+    totalTime(state): Time {
+      const reducedWorkSessions: WorkSession = state.sessions.reduce(
+        (prev: WorkSession, curr: WorkSession) => {
+          let hours: number = prev.duration.hours + curr.duration.hours;
+          let minutes: number = prev.duration.minutes + curr.duration.minutes;
+          hours += Math.floor(minutes / 60);
+          minutes = minutes % 60;
 
-        return { hours, minutes };
-      });
+          return { duration: { hours, minutes } };
+        }
+      );
+
+      return reducedWorkSessions.duration;
     },
   },
   actions: {},

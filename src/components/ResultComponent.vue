@@ -7,8 +7,12 @@
         :key="key"
       >
         <div>
-          {{ key + 1 }}. <strong>Hours:</strong> {{ session.hours }} <strong>Minutes:</strong>
-          {{ session.minutes }}
+          {{ key + 1 }}. <strong>Hours:</strong> {{ session.duration.hours }}
+          <strong>Minutes:</strong>
+          {{ session.duration.minutes }}
+          <small v-if="session.workDay">
+            (from: {{ session.workDay.from }}, to: {{ session.workDay.to }})
+          </small>
         </div>
 
         <!-- TODO: <b-badge variant="primary" pill>edit</b-badge> -->

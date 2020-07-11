@@ -62,7 +62,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapMutations } from "vuex";
-import { transformTime, convertArrayToMinutes } from "../helpers";
+import { convertArrayToMinutes } from "../helpers";
+import { WorkDay } from "@/types";
 export default Vue.extend({
   name: "InputComponent",
   data() {
@@ -75,17 +76,17 @@ export default Vue.extend({
     };
   },
   computed: {
-    timeDiff() {
+    timeDiff(): number {
       return convertArrayToMinutes(this.finishTime) - convertArrayToMinutes(this.startTime);
     },
-    isFinishTimeValid() {
+    isFinishTimeValid(): boolean | null {
       return this.startTime === "" || this.finishTime === "" || this.timeDiff >= 1 ? null : false;
     },
   },
   methods: {
     ...mapMutations(["addSession"]),
     initAddMutation(): void {
-      let hours, minutes;
+      let hours, minutes, workDay: WorkDay | undefined;
 
       if (this.timeMode) {
         if (this.timeDiff < 1) {
@@ -93,11 +94,15 @@ export default Vue.extend({
         }
         hours = Math.floor(this.timeDiff / 60);
         minutes = this.timeDiff % 60;
+        workDay = {
+          from: this.startTime.replace(/(\d{2}):(\d{2}):(\d{2})/, "$1:$2"),
+          to: this.finishTime.replace(/(\d{2}):(\d{2}):(\d{2})/, "$1:$2"),
+        };
       } else {
         hours = Number(this.hours);
         minutes = Number(this.minutes);
       }
-      this.addSession({ hours, minutes });
+      this.addSession({ duration: { hours, minutes }, workDay });
       this.hours = null;
       this.minutes = null;
       this.startTime = "";
