@@ -1,22 +1,12 @@
 <template>
   <div>
     <b-list-group v-if="sessions.length">
-      <b-list-group-item
-        class="d-flex justify-content-between align-items-center"
+      <single-session
         v-for="(session, key) in sessions"
+        :index="key"
         :key="key"
-      >
-        <div>
-          {{ key + 1 }}. <strong>Hours:</strong> {{ session.duration.hours }}
-          <strong>Minutes:</strong>
-          {{ session.duration.minutes }}
-          <small v-if="session.workDay">
-            (from: {{ session.workDay.from }}, to: {{ session.workDay.to }})
-          </small>
-        </div>
-
-        <!-- TODO: <b-badge variant="primary" pill>edit</b-badge> -->
-      </b-list-group-item>
+        :session="session"
+      />
       <b-list-group-item variant="primary">
         <strong>Summary:</strong>&nbsp; <strong>Hours:</strong> {{ totalTime.hours }}
         <strong>Minutes:</strong>
@@ -32,11 +22,15 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapGetters } from "vuex";
+import SingleSession from "./SingleSessionComponent.vue";
 export default Vue.extend({
   name: "ResultComponent",
   computed: {
     ...mapState(["sessions"]),
     ...mapGetters(["totalTime"]),
+  },
+  components: {
+    SingleSession,
   },
 });
 </script>

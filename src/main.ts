@@ -1,10 +1,14 @@
 import Vue from "vue";
 import App from "./App.vue";
-import { BootstrapVue } from "bootstrap-vue";
-import "./styles/styles.scss";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import Vuelidate from "vuelidate";
+
 import store from "./store";
+import "./styles/styles.scss";
 
 Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.use(Vuelidate);
 Vue.config.productionTip = false;
 Vue.prototype.browserLocale = navigator.language;
 

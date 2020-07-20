@@ -3,111 +3,82 @@
     <b-form-checkbox v-model="timeMode" class="pb-2" name="check-button" switch>
       Daytime mode
     </b-form-checkbox>
-    <b-form-row class="my-n2" v-if="!timeMode">
-      <b-col :cols="12" :sm="6" class="py-2">
-        <label for="hours-control" class="sr-only">Hours</label>
-        <b-form-spinbutton
-          id="hours-control"
-          v-model.lazy.number="hours"
-          placeholder="Type hours here"
-          min="0"
-        />
-      </b-col>
-      <b-col :cols="12" :sm="6" class="py-2">
-        <label for="minutes-control" class="sr-only">Minutes</label>
-        <b-form-spinbutton
-          id="minutes-control"
-          v-model.lazy.number="minutes"
-          placeholder="Type minutes here"
-          min="0"
-          max="60"
-          step="5"
-        />
-      </b-col>
-    </b-form-row>
-    <b-form-row class="my-n2" v-else>
-      <b-col :cols="12" :sm="6" :md="12" :lg="6" class="py-2">
-        <b-timepicker
-          v-model.lazy="startTime"
-          placeholder="Type here start time"
-          :hour12="false"
-          :locale="browserLocale"
-          :minutes-step="5"
-          :now-button="true"
-          :hide-header="true"
-        />
-      </b-col>
-      <b-col :cols="12" :sm="6" :md="12" :lg="6" class="py-2">
-        <b-form-group class="mb-0">
-          <b-timepicker
-            v-model.lazy="finishTime"
-            placeholder="Type here finish time"
-            :hour12="false"
-            :locale="browserLocale"
-            :minutes-step="5"
-            :now-button="true"
-            :hide-header="true"
-            :state="isFinishTimeValid"
-          />
-          <b-form-invalid-feedback v-show="!isFinishTimeValid" class="position-absolute"
-            >Finish time must be greater than Start time</b-form-invalid-feedback
-          >
-        </b-form-group>
-      </b-col>
-    </b-form-row>
-    <b-button class="mt-3" variant="primary" @click="initAddMutation()">Add session</b-button>
+    <time-input v-if="!timeMode" v-model="time" />
+    <work-day-input v-else v-model="workDay" />
+    <b-button class="mt-3" variant="primary" :disabled="$v.$invalid" @click="initAddMutation()"
+      >Add session</b-button
+    >
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { mapMutations } from "vuex";
-import { convertArrayToMinutes } from "../helpers";
-import { WorkDay } from "@/types";
+
+import TimeInput from "./TimeInputComponent.vue";
+import WorkDayInput from "./WorkDayInputComponent.vue";
+import { WorkSession } from "../classes/WorkSessionClass";
+import { validDuration, validWorkDay } from "@/validators";
+import { RuleDecl } from "vue/types/options";
+
 export default Vue.extend({
   name: "InputComponent",
   data() {
     return {
-      hours: null,
-      minutes: null,
-      timeMode: false,
-      startTime: "",
-      finishTime: "",
+      time: { hours: null, minutes: null } as { hours: number | null; minutes: number | null },
+      workDay: {
+        from: "" as string,
+        to: "" as string,
+      },
+      timeMode: false as boolean,
     };
-  },
-  computed: {
-    timeDiff(): number {
-      return convertArrayToMinutes(this.finishTime) - convertArrayToMinutes(this.startTime);
-    },
-    isFinishTimeValid(): boolean | null {
-      return this.startTime === "" || this.finishTime === "" || this.timeDiff >= 1 ? null : false;
-    },
   },
   methods: {
     ...mapMutations(["addSession"]),
     initAddMutation(): void {
-      let hours, minutes, workDay: WorkDay | undefined;
-
-      if (this.timeMode) {
-        if (this.timeDiff < 1) {
-          return;
-        }
-        hours = Math.floor(this.timeDiff / 60);
-        minutes = this.timeDiff % 60;
-        workDay = {
-          from: this.startTime.replace(/(\d{2}):(\d{2}):(\d{2})/, "$1:$2"),
-          to: this.finishTime.replace(/(\d{2}):(\d{2}):(\d{2})/, "$1:$2"),
-        };
-      } else {
-        hours = Number(this.hours);
-        minutes = Number(this.minutes);
+      if (this.$v.$invalid) {
+        return;
       }
-      this.addSession({ duration: { hours, minutes }, workDay });
-      this.hours = null;
-      this.minutes = null;
-      this.startTime = "";
-      this.finishTime = "";
+      const workSession: WorkSession = new WorkSession();
+      if (this.timeMode) {
+        workSession.workDay = this.workDay;
+      } else {
+        if (this.time.hours === null) {
+          return;
+        } else if (this.time.minutes === null) {
+          workSession.duration = { hours: Number(this.time.hours), minutes: 0 };
+        } else if (this.time.hours !== null && this.time.minutes !== null) {
+          workSession.duration = {
+            hours: Number(this.time.hours),
+            minutes: Number(this.time.minutes),
+          };
+        }
+      }
+      this.addSession(workSession);
+      this.time = { hours: null, minutes: null };
+      this.workDay = { from: "", to: "" };
     },
+  },
+  components: {
+    TimeInput,
+    WorkDayInput,
+  },
+  validations() {
+    let rules: RuleDecl;
+    if (this.timeMode) {
+      rules = {
+        workDay: {
+          validWorkDay,
+        },
+      };
+      return rules;
+    }
+    rules = {
+      time: {
+        validDuration,
+      },
+    };
+    return rules;
   },
 });
 </script>

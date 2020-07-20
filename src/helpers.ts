@@ -21,3 +21,7 @@ export function convertArrayToMinutes(time: number[] | string): number {
 
   return minutes + hours * 60;
 }
+
+export function normalizeTime(time: string): string {
+  return time.replace(/(\d{2}):(\d{2}):(\d{2})/, "$1:$2");
+}

@@ -8,6 +8,11 @@ export type Time = {
   minutes: number;
 };
 
+export type Duration = {
+  hours: number;
+  minutes: number;
+};
+
 export type WorkDay = {
   from: string;
   to: string;
