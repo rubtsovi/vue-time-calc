@@ -31,8 +31,4 @@ export class WorkSession {
       };
     }
   }
-
-  // public static calcWorkDayDuration(): Duration {
-
-  // }
 }
