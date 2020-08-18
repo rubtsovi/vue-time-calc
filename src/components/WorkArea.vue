@@ -1,12 +1,12 @@
-<template>
+<template functional>
   <div class="py-5">
     <b-container>
       <b-row class="my-n3">
         <b-col cols="12" md="6" class="py-3">
-          <InputComponent></InputComponent>
+          <Input />
         </b-col>
         <b-col cols="12" md="6" class="py-3">
-          <ResultComponent></ResultComponent>
+          <Result />
         </b-col>
       </b-row>
     </b-container>
@@ -14,13 +14,11 @@
 </template>
 
 <script lang="ts">
-import ResultComponent from "./ResultComponent.vue";
-import InputComponent from "./InputComponent.vue";
 import Vue from "vue";
-export default Vue.extend({
-  components: {
-    InputComponent,
-    ResultComponent,
-  },
-});
+import Component from "vue-class-component";
+
+@Component({
+  name: "WorkArea",
+})
+export default class WorkArea extends Vue {}
 </script>

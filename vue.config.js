@@ -6,6 +6,7 @@ const options = {
       },
     },
   },
+  publicPath: process.env.NODE_ENV === "production" ? "/time-calculator/" : "/",
 };
 
 module.exports = options;

@@ -32,41 +32,40 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
+import Vue from "vue";
 import { WorkDay } from "../types";
-export default Vue.extend({
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
+
+@Component({
   name: "WorkDayInput",
   model: {
     prop: "workDay",
     event: "change",
   },
-  props: {
-    workDay: {
-      type: Object as PropType<WorkDay>,
-    },
-  },
-  computed: {
-    from: {
-      get(): string {
-        return this.workDay.from;
-      },
-      set(time: string): void {
-        this.workDay.from = time;
-      },
-    },
-    to: {
-      get(): string {
-        return this.workDay.to;
-      },
-      set(time: string): void {
-        this.workDay.to = time;
-      },
-    },
-  },
-  methods: {
-    setWorkDay(): void {
-      this.$emit("change", this.workDay);
-    },
-  },
-});
+})
+export default class WorkDayInputComponent extends Vue {
+  @Prop()
+  private workDay!: WorkDay;
+
+  public get from(): string {
+    return this.workDay.from;
+  }
+
+  public set from(from: string) {
+    this.workDay.from = from;
+  }
+
+  public get to(): string {
+    return this.workDay.to;
+  }
+
+  public set to(to: string) {
+    this.workDay.to = to;
+  }
+
+  public setWorkDay(): void {
+    this.$emit("change", this.workDay);
+  }
+}
 </script>

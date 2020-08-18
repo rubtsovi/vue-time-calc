@@ -28,44 +28,42 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
-export default Vue.extend({
+@Component({
   name: "TimeInput",
   model: {
     prop: "time",
     event: "change",
   },
-  props: {
-    time: {
-      type: Object as PropType<{ hours: number | null; minutes: number | null }>,
-    },
-  },
-  computed: {
-    hours: {
-      get(): number | null {
-        return this.time.hours;
-      },
-      set(v: number): void {
-        this.time.hours = v;
-      },
-    },
-    minutes: {
-      get(): number | null {
-        return this.time.minutes;
-      },
-      set(v: number): void {
-        this.time.minutes = v;
-      },
-    },
-  },
-  methods: {
-    setTime(): void {
-      this.$emit("change", {
-        hours: this.time.hours,
-        minutes: this.time.minutes,
-      });
-    },
-  },
-});
+})
+export default class TimeInputComponent extends Vue {
+  @Prop()
+  private time!: { hours: number | null; minutes: number | null };
+
+  public get hours(): number | null {
+    return this.time.hours;
+  }
+
+  public set hours(hours: number | null) {
+    this.time.hours = hours;
+  }
+
+  public get minutes(): number | null {
+    return this.time.minutes;
+  }
+
+  public set minutes(minutes: number | null) {
+    this.time.minutes = minutes;
+  }
+
+  public setTime(): void {
+    this.$emit("change", {
+      hours: this.time.hours,
+      minutes: this.time.minutes,
+    });
+  }
+}
 </script>

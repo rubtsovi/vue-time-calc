@@ -32,6 +32,10 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-class-component": "^7.2.5",
+    "vue-property-decorator": "^9.0.0",
+    "vue-template-compiler": "^2.6.11",
+    "vuelidate-property-decorators": "^1.0.28",
+    "vuex-class": "^0.3.2"
   }
 }

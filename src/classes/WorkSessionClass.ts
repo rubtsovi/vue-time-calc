@@ -18,7 +18,6 @@ export class WorkSession {
   }
 
   public set workDay(v: WorkDay) {
-    console.log(v);
     this._workDay = {
       from: normalizeTime(v.from),
       to: normalizeTime(v.to),

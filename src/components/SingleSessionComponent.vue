@@ -56,73 +56,95 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
+import Vue from "vue";
+
 import { RuleDecl } from "vue/types/options";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
+import { Mutation, Getter } from "vuex-class";
+import { Validations } from "vuelidate-property-decorators";
 
 import { Duration, WorkDay } from "../types";
 import { WorkSession } from "@/classes/WorkSessionClass";
-import { mapMutations, mapGetters } from "vuex";
 import TimeInput from "./TimeInputComponent.vue";
 import WorkDayInput from "./WorkDayInputComponent.vue";
 import { validDuration, validWorkDay } from "@/validators";
-export default Vue.extend({
+
+@Component({
   name: "SingleSession",
-  props: {
-    index: Number,
-    session: Object as PropType<WorkSession>,
-  },
-  data() {
-    return {
-      editMode: false,
-      backupValue: {} as { workDay?: WorkDay; duration?: Duration },
-    };
-  },
-  computed: {
-    ...mapGetters(["activeEditMode"]),
-    time(): Duration {
-      return this.session.duration;
-    },
-    workDay(): WorkDay | undefined {
-      return this.session.workDay;
-    },
-  },
-  methods: {
-    ...mapMutations(["removeSession", "activateEditMode"]),
-    editSessionDuration(duration: Duration) {
-      this.session.duration = duration;
-    },
-    editSessionWorkDay(workDay: WorkDay) {
-      this.session.workDay = workDay;
-    },
-    toggleEditMode() {
-      this.editMode = !this.editMode;
-      this.activateEditMode(this.editMode ? this.index : null);
-    },
-    backupSession(): void {
-      console.log("backuping");
-      if (this.workDay) {
-        this.backupValue.workDay = Object.assign({}, this.session.workDay);
-      } else {
-        this.backupValue.duration = Object.assign({}, this.session.duration);
-      }
-    },
-    save() {
-      this.backupSession();
-      this.toggleEditMode();
-    },
-    revert(): void {
-      if (this.backupValue.workDay) {
-        this.session.workDay = this.backupValue.workDay;
-      } else if (this.backupValue.duration) {
-        this.session.duration = this.backupValue.duration;
-      }
-      this.toggleEditMode();
-    },
-  },
   components: {
     TimeInput,
     WorkDayInput,
   },
+})
+export default class SingleSessionComponent extends Vue {
+  private editMode: boolean;
+  private backupValue: { workDay?: WorkDay; duration?: Duration };
+
+  @Prop()
+  private index!: number;
+
+  @Prop()
+  private session!: WorkSession;
+
+  @Getter("activeEditMode")
+  private activeEditMode!: boolean;
+
+  @Mutation("removeSession")
+  private removeSession!: (index: number) => void;
+
+  @Mutation("activateEditMode")
+  private activateEditMode!: (index: number | null) => void;
+
+  public constructor() {
+    super();
+    this.editMode = false;
+    this.backupValue = {};
+  }
+
+  public get time(): Duration {
+    return this.session.duration;
+  }
+
+  public get workDay(): WorkDay | undefined {
+    return this.session.workDay;
+  }
+
+  public created() {
+    this.backupSession();
+  }
+
+  public editSessionDuration(duration: Duration) {
+    this.session.duration = duration;
+  }
+  public editSessionWorkDay(workDay: WorkDay) {
+    this.session.workDay = workDay;
+  }
+  public toggleEditMode() {
+    this.editMode = !this.editMode;
+    this.activateEditMode(this.editMode ? this.index : null);
+  }
+  public backupSession(): void {
+    if (this.workDay) {
+      this.backupValue.workDay = Object.assign({}, this.session.workDay);
+    } else {
+      this.backupValue.duration = Object.assign({}, this.session.duration);
+    }
+  }
+  public save() {
+    this.backupSession();
+    this.toggleEditMode();
+  }
+  public revert(): void {
+    if (this.backupValue.workDay) {
+      this.session.workDay = this.backupValue.workDay;
+    } else if (this.backupValue.duration) {
+      this.session.duration = this.backupValue.duration;
+    }
+    this.toggleEditMode();
+  }
+
+  @Validations()
   validations() {
     let rules: RuleDecl;
     if (this.session.workDay) {
@@ -141,11 +163,8 @@ export default Vue.extend({
     };
 
     return rules;
-  },
-  created() {
-    this.backupSession();
-  },
-});
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -21,16 +21,22 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapGetters } from "vuex";
 import SingleSession from "./SingleSessionComponent.vue";
-export default Vue.extend({
-  name: "ResultComponent",
-  computed: {
-    ...mapState(["sessions"]),
-    ...mapGetters(["totalTime"]),
-  },
+import Component from "vue-class-component";
+import { State, Getter } from "vuex-class";
+import { WorkSession, Duration } from "@/types";
+
+@Component({
+  name: "Result",
   components: {
     SingleSession,
   },
-});
+})
+export default class ResultComponent extends Vue {
+  @State("sessions")
+  private sessions!: WorkSession[];
+
+  @Getter("totalTime")
+  private totalTime!: Duration;
+}
 </script>

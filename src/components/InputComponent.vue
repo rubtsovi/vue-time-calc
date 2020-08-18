@@ -13,56 +13,64 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapMutations } from "vuex";
+
+import { RuleDecl } from "vue/types/options";
+import Component from "vue-class-component";
+import { Mutation } from "vuex-class";
+import { Validations } from "vuelidate-property-decorators";
 
 import TimeInput from "./TimeInputComponent.vue";
 import WorkDayInput from "./WorkDayInputComponent.vue";
 import { WorkSession } from "../classes/WorkSessionClass";
 import { validDuration, validWorkDay } from "@/validators";
-import { RuleDecl } from "vue/types/options";
 
-export default Vue.extend({
-  name: "InputComponent",
-  data() {
-    return {
-      time: { hours: null, minutes: null } as { hours: number | null; minutes: number | null },
-      workDay: {
-        from: "" as string,
-        to: "" as string,
-      },
-      timeMode: false as boolean,
-    };
-  },
-  methods: {
-    ...mapMutations(["addSession"]),
-    initAddMutation(): void {
-      if (this.$v.$invalid) {
-        return;
-      }
-      const workSession: WorkSession = new WorkSession();
-      if (this.timeMode) {
-        workSession.workDay = this.workDay;
-      } else {
-        if (this.time.hours === null) {
-          return;
-        } else if (this.time.minutes === null) {
-          workSession.duration = { hours: Number(this.time.hours), minutes: 0 };
-        } else if (this.time.hours !== null && this.time.minutes !== null) {
-          workSession.duration = {
-            hours: Number(this.time.hours),
-            minutes: Number(this.time.minutes),
-          };
-        }
-      }
-      this.addSession(workSession);
-      this.time = { hours: null, minutes: null };
-      this.workDay = { from: "", to: "" };
-    },
-  },
+@Component({
+  name: "Input",
   components: {
     TimeInput,
     WorkDayInput,
   },
+})
+export default class InputComponent extends Vue {
+  private time: { hours: number | null; minutes: number | null };
+  private workDay: { from: string; to: string };
+  private timeMode: boolean;
+
+  public constructor() {
+    super();
+    this.time = { hours: null, minutes: null };
+    this.workDay = { from: "", to: "" };
+    this.timeMode = false;
+  }
+
+  @Mutation("addSession")
+  private addSession!: (workSession: WorkSession) => void;
+
+  public initAddMutation(): void {
+    if (this.$v.$invalid) {
+      return;
+    }
+    const workSession: WorkSession = new WorkSession();
+    if (this.timeMode) {
+      workSession.workDay = this.workDay;
+    } else {
+      if (this.time.hours === null) {
+        return;
+      } else if (this.time.minutes === null) {
+        workSession.duration = { hours: Number(this.time.hours), minutes: 0 };
+      } else if (this.time.hours !== null && this.time.minutes !== null) {
+        workSession.duration = {
+          hours: Number(this.time.hours),
+          minutes: Number(this.time.minutes),
+        };
+      }
+    }
+    this.addSession(workSession);
+    this.time = { hours: null, minutes: null };
+    this.workDay = { from: "", to: "" };
+  }
+
+  @Validations()
   validations() {
     let rules: RuleDecl;
     if (this.timeMode) {
@@ -79,6 +87,6 @@ export default Vue.extend({
       },
     };
     return rules;
-  },
-});
+  }
+}
 </script>
