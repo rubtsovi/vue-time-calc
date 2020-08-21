@@ -1,0 +1,145 @@
+<template functional>
+  <div>
+    <div id="hero-section" class="py-5 bg-secondary">
+      <div class="container h-100">
+        <div class="row h-100 align-items-center">
+          <div class="col-12 col-md-8 col-lg-6">
+            <h1>Meet Timmy</h1>
+            <p class="lead">
+              Your personal assistant which helps you to count how long you've worked and how much
+              you've earned.
+            </p>
+            <p class="lead">
+              Also with this app you can plan your project and manage your time in smart way
+            </p>
+            <a href="#" class="btn btn-lg btn-dark mr-3">Login</a>
+            <a href="#" class="btn btn-lg btn-outline-dark">Learn more</a>
+          </div>
+          <div class="col-12 col-md-4 col-lg-6 text-center">
+            <img
+              src="../../public/images/pexels-flickr-149290-removebg-preview.png"
+              class=""
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="how-it-works" class="py-5">
+      <div class="container">
+        <div class="h1 text-center mb-5">How it works?</div>
+        <div class="row mt-n3 align-items-center mb-5">
+          <div class="col-12 py-3 col-md-6 order-md-2">
+            <img src="../../public/images/calculator.svg" alt="" width="28" class="mb-2" />
+            <h4>Calculator</h4>
+            <p>
+              If your salary depends on time you've worked, then this feature made for you. Just
+              provide time spent on your work or time of start and finish work, and Timmy will show
+              you total work time. Optionally you could type hourly wage to let Timmy calculate how
+              much you've earned.
+            </p>
+            <a href="#" class="btn btn-primary">Check it now</a>
+          </div>
+          <div class="col-12 py-3 col-md-6 order-md-1">
+            <img
+              src="../../public/images/agence-olloweb-qfp4-Ud6Fyg-unsplash.jpg"
+              alt=""
+              class="img-fluid"
+            />
+          </div>
+        </div>
+        <div class="row my-n3 align-items-center">
+          <div class="col-12 py-3 col-md-6">
+            <img src="../../public/images/puzzle.svg" alt="" width="28" class="mb-2" />
+            <h4>Project planner</h4>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae architecto
+              eius, explicabo totam hic ratione praesentium odio mollitia quis accusantium,
+              molestias distinctio adipisci fuga rem inventore est neque sequi?
+            </p>
+            <a href="#" class="btn btn-primary">Check it now</a>
+          </div>
+          <div class="col-12 py-3 col-md-6">
+            <img
+              src="../../public/images/luke-chesser-JKUTrJ4vK00-unsplash.jpg"
+              alt=""
+              class="img-fluid"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="tech-stack" class="border-top py-4">
+      <div class="container">
+        <div class="h2 text-center mb-5">Built with</div>
+        <div class="d-flex my-n3 justify-content-center flex-wrap align-items-center">
+          <div class="px-4 py-3">
+            <img height="48" src="../../public/images/vuejs.svg" alt="" />
+          </div>
+          <div class="px-4 py-3">
+            <img height="48" src="../../public/images/webpack.svg" alt="" />
+          </div>
+          <div class="px-4 py-3">
+            <img height="48" src="../../public/images/typescript.svg" alt="" />
+          </div>
+          <div class="px-4 py-3">
+            <img height="48" src="../../public/images/firebase.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="py-4 bg-dark">
+      <div class="container text-center text-light">
+        Author: rubtsovi<br />
+        <a target="_blank" href="https://github.com/rubtsovi" class="social-link text-reset">
+          <font-awesome-icon :icon="['fab', 'github']" />
+        </a>
+        <a
+          target="_blank"
+          href="https://www.linkedin.com/in/rubtsovi/"
+          class="social-link text-reset"
+        >
+          <font-awesome-icon :icon="['fab', 'linkedin']" />
+        </a>
+      </div>
+    </footer>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component({
+  name: "Homepage",
+})
+export default class HomepageComponent extends Vue {}
+</script>
+
+<style lang="scss" scoped>
+#hero-section {
+  min-height: calc(100vh - 67px);
+  height: 1px;
+  position: relative;
+  overflow: hidden;
+  @include media-breakpoint-up(md) {
+    min-height: 600px;
+  }
+  > .container {
+    &,
+    & > .row {
+      height: 100%;
+    }
+  }
+  h1,
+  p,
+  div {
+    color: $white;
+  }
+}
+
+.social-link {
+  padding: map-get($map: $spacers, $key: 2);
+  font-size: 1.5rem;
+}
+</style>

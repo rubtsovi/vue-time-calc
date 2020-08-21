@@ -1,8 +1,16 @@
-$primary: #1976d2;
-$secondary: #43a047;
-$body-color: rgba(0, 0, 0, 0.87);
+$primary: #006ba6;
+$secondary: #06a77d;
+$black: #131515;
+$dark: $black;
+$light: #eaeaea;
+$body-color: $black;
 $enable-responsive-font-sizes: true;
 $tooltip-font-size: 0.7rem;
+$btn-border-radius: 3px;
+$btn-border-radius-sm: 3px;
+$btn-border-radius-lg: 3px;
+$btn-border-width: 2px;
+$border-width: 2px;
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";

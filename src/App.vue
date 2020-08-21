@@ -1,29 +1,20 @@
 <template>
   <div id="app">
-    <b-jumbotron
-      header="Time calc App"
-      lead="The app which helps you to manage your working time"
-      :fluid="true"
-      bg-variant="primary"
-      text-variant="white"
-    ></b-jumbotron>
-    <WorkArea />
+    <AppHeader />
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
-import WorkArea from "@/components/WorkArea.vue";
 import Vue from "vue";
 import Component from "vue-class-component";
-import Result from "@/components/ResultComponent.vue";
-import Input from "@/components/InputComponent.vue";
+
+import AppHeader from "@/components/AppHeaderComponent.vue";
 
 @Component({
   name: "App",
   components: {
-    WorkArea,
-    Result,
-    Input,
+    AppHeader,
   },
 })
 export default class App extends Vue {}
