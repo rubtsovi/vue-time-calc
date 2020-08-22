@@ -38,7 +38,9 @@
               you total work time. Optionally you could type hourly wage to let Timmy calculate how
               much you've earned.
             </p>
-            <a href="#" class="btn btn-primary">Check it now</a>
+            <router-link :to="{ name: 'calculator' }" class="btn btn-primary">
+              Try it now
+            </router-link>
           </div>
           <div class="col-12 py-3 col-md-6 order-md-1">
             <img
@@ -57,7 +59,7 @@
               eius, explicabo totam hic ratione praesentium odio mollitia quis accusantium,
               molestias distinctio adipisci fuga rem inventore est neque sequi?
             </p>
-            <a href="#" class="btn btn-primary">Check it now</a>
+            <a href="#" class="btn btn-primary">Try it now</a>
           </div>
           <div class="col-12 py-3 col-md-6">
             <img
@@ -83,26 +85,14 @@
             <img height="48" src="../../public/images/typescript.svg" alt="" />
           </div>
           <div class="px-4 py-3">
+            <img height="48" src="../../public/images/bootstrap.svg" alt="" />
+          </div>
+          <div class="px-4 py-3">
             <img height="48" src="../../public/images/firebase.svg" alt="" />
           </div>
         </div>
       </div>
     </div>
-    <footer class="py-4 bg-dark">
-      <div class="container text-center text-light">
-        Author: rubtsovi<br />
-        <a target="_blank" href="https://github.com/rubtsovi" class="social-link text-reset">
-          <font-awesome-icon :icon="['fab', 'github']" />
-        </a>
-        <a
-          target="_blank"
-          href="https://www.linkedin.com/in/rubtsovi/"
-          class="social-link text-reset"
-        >
-          <font-awesome-icon :icon="['fab', 'linkedin']" />
-        </a>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -136,10 +126,5 @@ export default class HomepageComponent extends Vue {}
   div {
     color: $white;
   }
-}
-
-.social-link {
-  padding: map-get($map: $spacers, $key: 2);
-  font-size: 1.5rem;
 }
 </style>

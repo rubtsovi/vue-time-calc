@@ -1,5 +1,6 @@
 <template>
   <div>
+    <WageOptions class="mb-4" />
     <b-form-checkbox v-model="timeMode" class="pb-2" name="check-button" switch>
       Daytime mode
     </b-form-checkbox>
@@ -21,6 +22,7 @@ import { Validations } from "vuelidate-property-decorators";
 
 import TimeInput from "./TimeInputComponent.vue";
 import WorkDayInput from "./WorkDayInputComponent.vue";
+import WageOptions from "./WageOptionsComponent.vue";
 import { WorkSession } from "../classes/WorkSessionClass";
 import { validDuration, validWorkDay } from "@/validators";
 
@@ -29,6 +31,7 @@ import { validDuration, validWorkDay } from "@/validators";
   components: {
     TimeInput,
     WorkDayInput,
+    WageOptions,
   },
 })
 export default class InputComponent extends Vue {

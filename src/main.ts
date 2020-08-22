@@ -5,13 +5,14 @@ import Vuelidate from "vuelidate";
 import retina from "retinajs";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import store from "./store";
 import router from "./router/router";
 import "./styles/styles.scss";
 
-library.add(faGithub, faLinkedin);
+library.add(faGithub, faLinkedin, faChevronRight);
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);

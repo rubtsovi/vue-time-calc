@@ -17,3 +17,10 @@ export type WorkDay = {
   from: string;
   to: string;
 };
+
+export type roundTime = false | "ceil" | "floor";
+
+export interface WageOptions {
+  hourlyWage: number;
+  roundTime: roundTime;
+}
