@@ -12,8 +12,7 @@
           <b-navbar-nav class="ml-auto">
             <b-nav-item :to="{ name: 'calculator' }">Calculator</b-nav-item>
             <b-nav-item href="#">Project planning</b-nav-item>
-            <b-nav-item href="#">Login</b-nav-item>
-            <b-nav-item href="#">Logout</b-nav-item>
+            <LoggedInUserMenu />
           </b-navbar-nav>
         </b-collapse>
       </b-container>

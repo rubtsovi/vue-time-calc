@@ -1,7 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { Duration, WageOptions } from "@/types";
+import { Duration, WageOptions, SignupCredentials, LoginCredentials } from "@/types";
 import { WorkSession } from "@/classes/WorkSessionClass";
+import * as firebase from "../firebase";
+import { UserInfo } from "../types";
+import fb, { User } from "firebase";
+import router from "@/router/router";
 
 Vue.use(Vuex);
 
@@ -10,6 +14,7 @@ export default new Vuex.Store({
     sessions: Array<WorkSession>(),
     wageOptions: { hourlyWage: 0, roundTime: false } as WageOptions,
     activeEditMode: null as number | null,
+    user: null as UserInfo | null,
   },
   mutations: {
     addSession(state, payload: WorkSession): void {
@@ -23,6 +28,20 @@ export default new Vuex.Store({
     },
     setWageOptions(state, payload: WageOptions) {
       Vue.set(state, "wageOptions", payload);
+    },
+    setUser(state, payload: User | null) {
+      Vue.set(
+        state,
+        "user",
+        payload === null
+          ? null
+          : {
+              displayName: payload?.displayName,
+              email: payload?.email,
+              uid: payload?.uid,
+              photoURL: payload?.photoURL,
+            }
+      );
     },
   },
   getters: {
@@ -63,6 +82,31 @@ export default new Vuex.Store({
       );
     },
   },
-  actions: {},
+  actions: {
+    async signUpWithEmail({ commit }, payload: SignupCredentials) {
+      const { user } = await firebase.auth.createUserWithEmailAndPassword(
+        payload.email,
+        payload.pass
+      );
+
+      await user?.updateProfile({ displayName: payload.name });
+      commit("setUser", user);
+    },
+    async loginWithEmail({ commit }, payload: LoginCredentials) {
+      const { user } = await firebase.auth.signInWithEmailAndPassword(payload.email, payload.pass);
+      commit("setUser", user);
+    },
+    async logout({ commit }) {
+      await firebase.auth.signOut();
+      commit("setUser", null);
+      if (router.currentRoute.name !== "homepage") {
+        router.push({ name: "homepage" });
+      }
+    },
+    async loginInPopup({ commit }, payload: fb.auth.AuthProvider) {
+      const { user } = await firebase.auth.signInWithPopup(payload);
+      commit("setUser", user);
+    },
+  },
   modules: {},
 });

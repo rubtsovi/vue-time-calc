@@ -25,11 +25,13 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 import AppHeader from "@/components/AppHeaderComponent.vue";
+import LoggedInUserMenu from "@/components/LoggedInUserComponent.vue";
 
 @Component({
   name: "App",
   components: {
     AppHeader,
+    LoggedInUserMenu,
   },
 })
 export default class App extends Vue {}

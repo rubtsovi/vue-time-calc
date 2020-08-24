@@ -4,15 +4,16 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import Vuelidate from "vuelidate";
 import retina from "retinajs";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faGithub, faLinkedin, faGoogle, faFacebookF } from "@fortawesome/free-brands-svg-icons";
+import { faChevronRight, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import store from "./store";
 import router from "./router/router";
 import "./styles/styles.scss";
+import { auth } from "./firebase";
 
-library.add(faGithub, faLinkedin, faChevronRight);
+library.add(faUser, faGithub, faLinkedin, faChevronRight, faFacebookF, faGoogle);
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
@@ -25,8 +26,16 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 window.addEventListener("load", retina);
 
-new Vue({
-  store,
-  router,
-  render: (h) => h(App),
-}).$mount("#app");
+let app: Vue;
+auth.onAuthStateChanged((user) => {
+  if (!app) {
+    app = new Vue({
+      store,
+      router,
+      render: (h) => h(App),
+    }).$mount("#app");
+  }
+  if (user) {
+    store.commit("setUser", user);
+  }
+});

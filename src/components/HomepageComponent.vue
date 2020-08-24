@@ -12,7 +12,9 @@
             <p class="lead">
               Also with this app you can plan your project and manage your time in smart way
             </p>
-            <a href="#" class="btn btn-lg btn-dark mr-3">Login</a>
+            <router-link :to="{ name: 'login' }" class="btn btn-lg btn-dark mr-3"
+              >Login</router-link
+            >
             <a href="#" class="btn btn-lg btn-outline-dark">Learn more</a>
           </div>
           <div class="col-12 col-md-4 col-lg-6 text-center">

@@ -24,3 +24,19 @@ export interface WageOptions {
   hourlyWage: number;
   roundTime: roundTime;
 }
+
+export interface LoginCredentials {
+  email: string;
+  pass: string;
+}
+
+export interface SignupCredentials extends LoginCredentials {
+  name: string;
+}
+
+export interface UserInfo {
+  displayName?: string | null;
+  email?: string | null;
+  photoURL?: string | null;
+  uid?: string;
+}
