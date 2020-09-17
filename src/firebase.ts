@@ -1,17 +1,9 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import config from "./firebaseconfig";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDHmbZhg7hsz1yTESCHvraKOhp3CUzJpoQ",
-  authDomain: "timmy-the-app.firebaseapp.com",
-  databaseURL: "https://timmy-the-app.firebaseio.com",
-  projectId: "timmy-the-app",
-  storageBucket: "timmy-the-app.appspot.com",
-  messagingSenderId: "707237817295",
-  appId: "1:707237817295:web:323575b792fd53536580ba",
-};
-firebase.initializeApp(firebaseConfig);
+const firebaseConfig = firebase.initializeApp(config);
 
 // utils
 const db = firebase.firestore();
