@@ -30,6 +30,8 @@ import countries from "countries-db";
 
 import { State, Getter } from "vuex-class";
 import { WorkSession, Duration, WageOptions } from "@/types";
+import { StateTypes } from "@/store/state";
+import { GettersTypes } from "@/store/getters";
 
 @Component({
   name: "Result",
@@ -38,16 +40,16 @@ import { WorkSession, Duration, WageOptions } from "@/types";
   },
 })
 export default class ResultComponent extends Vue {
-  @State("sessions")
+  @State(StateTypes.SESSIONS)
   private sessions!: WorkSession[];
 
-  @State("wageOptions")
+  @State(StateTypes.WAGE_OPTIONS)
   private wageOptions!: WageOptions;
 
-  @Getter("totalTime")
+  @Getter(GettersTypes.TOTAL_TIME)
   private totalTime!: Duration;
 
-  @Getter("earnedMoney")
+  @Getter(GettersTypes.EARNED_MONEY)
   private earnedMoney!: number;
 
   public get earnedI18n(): string {

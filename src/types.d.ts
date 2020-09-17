@@ -8,10 +8,10 @@ export type Time = {
   minutes: number;
 };
 
-export type Duration = {
+export interface Duration {
   hours: number;
   minutes: number;
-};
+}
 
 export type WorkDay = {
   from: string;

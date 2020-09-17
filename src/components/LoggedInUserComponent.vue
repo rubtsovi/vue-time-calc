@@ -17,16 +17,18 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { State, Action } from "vuex-class";
 import { UserInfo } from "@/types";
+import { StateTypes } from "@/store/state";
+import { ActionTypes } from "@/store/actions";
 
 @Component({
   name: "LoggedInUserMenu",
 })
 export default class LoggedInUserMenuComponent extends Vue {
-  @State("user")
+  @State(StateTypes.USER)
   private user!: UserInfo | null;
 
-  @Action("logout")
-  public logout!: () => void;
+  @Action(ActionTypes.LOGOUT)
+  public logout!: () => Promise<void>;
 }
 </script>
 

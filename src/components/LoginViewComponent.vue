@@ -154,12 +154,14 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Action } from "vuex-class";
+import { Action, State } from "vuex-class";
 import { Validate } from "vuelidate-property-decorators";
-import { LoginCredentials, SignupCredentials } from "@/types";
+import { LoginCredentials, SignupCredentials, WageOptions } from "@/types";
 import { required, email, minLength } from "vuelidate/lib/validators";
-import firebase, { FirebaseError } from "firebase";
+import { FirebaseError } from "firebase";
 import { googleProvider, facebookProvider, githubProvider } from "../firebase";
+import { ActionTypes, Actions } from "../store/actions";
+import { StateTypes } from "@/store/state";
 
 @Component({
   name: "LoginView",
@@ -187,7 +189,6 @@ export default class LoginViewComponent extends Vue {
   private userPassword = "";
 
   private signUpActive = false;
-
   @Validate(() => ({ required, minLength: minLength(3) }))
   private userName = "";
 
@@ -196,14 +197,23 @@ export default class LoginViewComponent extends Vue {
   private isEmailExists = true;
   private isPasswordCorrect = true;
 
-  @Action("loginWithEmail")
-  private loginWithEmail!: (credentials: LoginCredentials) => Promise<undefined>;
+  @State(StateTypes.WAGE_OPTIONS)
+  private wageOptions!: WageOptions;
 
   @Action("signUpWithEmail")
-  private signUpWithEmail!: (credentials: SignupCredentials) => Promise<undefined>;
+  private signUpWithEmail!: (
+    payload: Parameters<Actions[ActionTypes.EMAIL_SIGNUP]>[1]
+  ) => ReturnType<Actions[ActionTypes.EMAIL_SIGNUP]>;
+
+  @Action("loginWithEmail")
+  private loginWithEmail!: (
+    payload: Parameters<Actions[ActionTypes.EMAIL_LOGIN]>[1]
+  ) => ReturnType<Actions[ActionTypes.EMAIL_LOGIN]>;
 
   @Action("loginInPopup")
-  private loginInPopup!: (providr: firebase.auth.AuthProvider) => Promise<undefined>;
+  private loginInPopup!: (
+    payload: Parameters<Actions[ActionTypes.POPUP_LOGIN]>[1]
+  ) => ReturnType<Actions[ActionTypes.POPUP_LOGIN]>;
 
   public login(credentials: LoginCredentials) {
     this.isFetchingAuth = true;

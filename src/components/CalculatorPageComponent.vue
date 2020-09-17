@@ -1,8 +1,8 @@
 <template>
   <div>
     <b-jumbotron
-      header="Time calc App"
-      lead="The app which helps you to manage your working time"
+      header="Time Calculator"
+      lead="This feature helps you to count how much you've earned"
       :fluid="true"
       bg-variant="primary"
       text-variant="white"

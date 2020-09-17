@@ -25,6 +25,7 @@ import WorkDayInput from "./WorkDayInputComponent.vue";
 import WageOptions from "./WageOptionsComponent.vue";
 import { WorkSession } from "../classes/WorkSessionClass";
 import { validDuration, validWorkDay } from "@/validators";
+import { MutationTypes } from "@/store/mutations";
 
 @Component({
   name: "Input",
@@ -46,7 +47,7 @@ export default class InputComponent extends Vue {
     this.timeMode = false;
   }
 
-  @Mutation("addSession")
+  @Mutation(MutationTypes.ADD_SESSION)
   private addSession!: (workSession: WorkSession) => void;
 
   public initAddMutation(): void {

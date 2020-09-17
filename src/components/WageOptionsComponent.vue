@@ -31,12 +31,14 @@ import Component from "vue-class-component";
 import { Watch } from "vue-property-decorator";
 import { State, Mutation } from "vuex-class";
 import { WageOptions, roundTime } from "@/types";
+import { StateTypes } from "@/store/state";
+import { MutationTypes } from "@/store/mutations";
 
 @Component({
   name: "WageOptions",
 })
 export default class WageOptionsComponent extends Vue {
-  @State("wageOptions")
+  @State(StateTypes.WAGE_OPTIONS)
   private wageOptions!: WageOptions;
 
   private hourlyWage = 0;
@@ -47,7 +49,7 @@ export default class WageOptionsComponent extends Vue {
     this.roundTime = this.wageOptions.roundTime;
   }
 
-  @Mutation("setWageOptions")
+  @Mutation(MutationTypes.SET_WAGE_OPTIONS)
   private setWageOptions!: (payload: WageOptions) => void;
 
   @Watch("hourlyWage")

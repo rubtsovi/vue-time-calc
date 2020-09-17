@@ -69,6 +69,8 @@ import { WorkSession } from "@/classes/WorkSessionClass";
 import TimeInput from "./TimeInputComponent.vue";
 import WorkDayInput from "./WorkDayInputComponent.vue";
 import { validDuration, validWorkDay } from "@/validators";
+import { GettersTypes } from "@/store/getters";
+import { MutationTypes } from "@/store/mutations";
 
 @Component({
   name: "SingleSession",
@@ -87,13 +89,13 @@ export default class SingleSessionComponent extends Vue {
   @Prop()
   private session!: WorkSession;
 
-  @Getter("activeEditMode")
+  @Getter(GettersTypes.SESION_IN_EDITION)
   private activeEditMode!: boolean;
 
-  @Mutation("removeSession")
+  @Mutation(MutationTypes.REMOVE_SESSION)
   private removeSession!: (index: number) => void;
 
-  @Mutation("activateEditMode")
+  @Mutation(MutationTypes.ACTIVATE_EDIT_MODE)
   private activateEditMode!: (index: number | null) => void;
 
   public constructor() {
